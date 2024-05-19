@@ -1,0 +1,25 @@
+quiz_generator <- function(input, question_count) {
+  reactive({
+    grade <- switch(input$grade,
+                    "Second grade" = 2,
+                    "Third grade" = 3,
+                    "Fourth grade" = 4,
+                    "Fifth grade" = 5,
+                    "Sixth grade" = 6)
+    
+    req(input$select)
+    
+    # Create an empty data frame to store the questions
+    questions_df <- data.frame(text = character(0), 
+                               answer = numeric(0), 
+                               correct = logical(0))
+    
+    # Generate specified number of questions (question count) and add them to the data frame
+    for (i in 1:question_count) {
+      question <- question_generator(grade)
+      questions_df <- rbind(questions_df, question)
+    }
+    
+    questions_df
+  })
+}
