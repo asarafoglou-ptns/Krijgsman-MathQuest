@@ -1,6 +1,8 @@
 # Libraries needed to run the Shiny app
+library(shinyjs)
 library(shiny)
 library(shinyWidgets)
+library(ggplot2)
 
 # Sourcing the functions needed
 source("R/server.R")
@@ -32,5 +34,5 @@ runMathQuest <- function(name, question_count) {
 }
 
 # Run app
-runMathQuest(name = "Bruny", question_count = 2)
+runMathQuest(name = "Bruny", question_count = 6)
 
