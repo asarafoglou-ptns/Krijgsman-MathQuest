@@ -48,3 +48,6 @@ devtools::install()
 
 library(MathQuest)
 MathQuest::runMathQuest("Bruny", 2)
+
+??MathQuest
+?runMathQuest
