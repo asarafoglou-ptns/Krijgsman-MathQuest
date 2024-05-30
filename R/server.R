@@ -39,6 +39,12 @@ create_server <- function(question_count, name) {
     # Call question_picker function to get current question
     current_question <- question_picker(questions, current_attempt, correct_questions, game_over)
     
+    # Disable grade selection after "Select" button is clicked
+    shiny::observeEvent(input$select, {
+      shiny::updateActionButton(session, "select", disabled = TRUE)
+      shinyjs::disable("grade")
+    })
+    
     # Reactive value for when quiz is finished
     output$finished <- shiny::renderText({
       if (is.null(current_question())) {
@@ -47,7 +53,7 @@ create_server <- function(question_count, name) {
         'FALSE'
       }
     })
-    outputOptions(output, "finished", suspendWhenHidden = FALSE)
+    shiny::outputOptions(output, "finished", suspendWhenHidden = FALSE)
     
     # Display the question
     output$question <- shiny::renderText({
@@ -91,7 +97,7 @@ create_server <- function(question_count, name) {
         # When 5 or more mistakes are made
         if (incorrect_attempts() >= 5) {
           output$feedback <- shiny::renderText({
-            "Game over! You have made 5 mistakes. Click 'Plot' to see your results."
+            "Game over! You have made 5 mistakes. Click 'Show Results' to see how you did."
           })
           shiny::updateActionButton(session, "next_question", disabled = TRUE)
           shiny::updateActionButton(session, "submit", disabled = TRUE)
@@ -135,7 +141,7 @@ create_server <- function(question_count, name) {
       
       if (is.null(question)) {
         output$feedback <- shiny::renderText({
-          "You completed the quiz! Click plot to see your results"
+          "You completed the quiz! Click 'Show Results' to see your results below."
         })
       }
     })
@@ -180,8 +186,8 @@ create_server <- function(question_count, name) {
     }
   })
   
-    # Plot overall score and score by operator when 'Plot' button is clicked
-    observeEvent(input$plot_result, {
+    # Plot overall score and score by operator when 'Result' button is clicked
+    shiny::observeEvent(input$plot_result, {
       
       # Calculate overall score
       overall_score <- length(first_try_correct_questions()) / question_count * 100
@@ -195,33 +201,42 @@ create_server <- function(question_count, name) {
         # Skip calculation if no questions available for the operator
         if (nrow(operator_questions) == 0) {
           next
-          }
-      
+        }
+        
         # Operator correct
         operator_correct <- first_try_correct_questions()[first_try_correct_questions() %in% which(grepl(paste("\\", operators[i], sep=""), questions()$text))]
         # Percentage correct per operator
         scores[i] <- length(operator_correct) / nrow(operator_questions) * 100
-        }
-    
-      # Create data frame for plotting
-      plot_data <- data.frame(operator = operators, score = scores)
+      }
       
-      # Plot overall score
-      output$score_plot <- renderPlot({
-        ggplot(plot_data, aes(x = 1, y = 100, fill = overall_score)) +
-          geom_bar(stat = "identity", width = 1) +
-          labs(title = "Overall Score in Percentage", y = "% correct", fill = "Category") +
-          theme_void() +
-          annotate("text", x = 0, y = 0, label = paste0(round(overall_score, 1), "%"), size = 8, color = "#FFA07b")
-      })
+      # Create combined data frame for plotting
+      plot_data <- data.frame(
+        category = c("Overall", operators),
+        score = c(overall_score, scores)
+      )
       
-      # Plot score by operator
-      output$operator_plot <- renderPlot({
-        ggplot(plot_data, aes(x = operator, y = score, fill = operator)) +
-          geom_bar(stat = "identity", position = "dodge") +
-          labs(title = "Score by Operator", y = "% Correct") +
-          theme_minimal()
-        })
-    })
+      # Plot overall score and score by operator
+      output$combined_plot <- shiny::renderPlot({
+        ggplot2::ggplot(plot_data, aes(x = category, y = score, fill = category)) +
+          ggplot2::geom_bar(stat = "identity", position = "dodge") +
+          ggplot2::labs(title = "Overall and Operator Scores", y = "% Correct") +
+          ggplot2::theme_minimal() +
+          ggplot2::scale_fill_manual(values = c("Overall" = "#005AFD", "+" = "#FF1093", "-" = "#50C878", "*" = "#5C01BC", "/" = "#FFCF02")) +
+          ggplot2::geom_text(aes(label = round(score, 1)), vjust = -0.5, size = 5) +
+          ggplot2::theme(
+            panel.background = element_rect(fill = "#FFA07b", color = NA),          # Plot background
+            plot.background = element_rect(fill = "#FFA07b", color = NA),           # Outer plot background
+            legend.background = element_rect(fill = "#FFA07b"),                     # Legend background
+            legend.box.background = element_rect(fill = "#FFA07b"),                 # Legend box background
+            panel.grid.major = element_blank(),                                     # Remove major grid lines
+            panel.grid.minor = element_blank(),                                     # Remove minor grid lines
+            axis.line = element_line(color = "black"),                              # Axis lines
+            axis.text = element_text(size = 16, color = "black"),                   # Font size for axis text
+            axis.title.x = element_text(size = 14, color = "black", face = "bold"), # Font size for x-axis title
+            axis.title.y = element_text(size = 14, color = "black", face = "bold"), # Font size for y-axis title
+            plot.title = element_text(size = 20, face = "bold", hjust = 0.5)        # Title size, bold, and centered
+            )
+      }, bg = "transparent")
+  })
   }
 }

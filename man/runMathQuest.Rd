@@ -7,12 +7,18 @@
 runMathQuest(name, question_count)
 }
 \arguments{
-\item{name}{string. A string containing a name to personalize the UI input.}
+\item{name}{string. A string containing a name to personalize the UI input. The default name is set to Superhero.}
 
-\item{question_count}{numeric. Number of questions the user wants the quiz to contain.}
+\item{question_count}{integer. Number of questions the user wants the quiz to contain. When the argument is not specified, the question_count argument is set to 15 by default.}
 }
 \description{
-Math Quest is a fun and playful quiz app that allows elementary school children (grade 4 through grade 8) to practice different parts of math, such as addition, subtraction, multiplication, and division. The app generates math questions adapted to the selected school grade level. The application incorporates gamification and learning strategies to promote and make learning more fun for students and optimize their enjoyment to achieve the best results.
+Math Quest is a fun and playful quiz app that allows elementary
+school children (second through sixth grade) to practice different parts of math,
+such as addition, subtraction, multiplication, and division.
+The app generates math questions adapted to the selected school grade level.
+The application incorporates gamification and learning strategies to promote
+and make learning more fun for students and optimize their enjoyment to achieve
+the best results.
 }
 \examples{
 # Run Math Quest quiz with 15 questions

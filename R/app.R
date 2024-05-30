@@ -13,11 +13,18 @@ source("R/ui.R")
 # Function to run the application
 #' @title runMathQuest
 #' 
-#' @description Math Quest is a fun and playful quiz app that allows elementary school children (grade 4 through grade 8) to practice different parts of math, such as addition, subtraction, multiplication, and division. The app generates math questions adapted to the selected school grade level. The application incorporates gamification and learning strategies to promote and make learning more fun for students and optimize their enjoyment to achieve the best results.
+#' @description Math Quest is a fun and playful quiz app that allows elementary 
+#' school children (second through sixth grade) to practice different parts of math, 
+#' such as addition, subtraction, multiplication, and division. 
+#' The app generates math questions adapted to the selected school grade level. 
+#' The application incorporates gamification and learning strategies to promote 
+#' and make learning more fun for students and optimize their enjoyment to achieve 
+#' the best results.
 #'
-#' @usage runMathQuest(name, question_count)  
-#' @param name string. A string containing a name to personalize the UI input.
-#' @param question_count numeric. Number of questions the user wants the quiz to contain.
+#' @usage runMathQuest(name, question_count)
+#'   
+#' @param name string. A string containing a name to personalize the UI input. The default name is set to Superhero.
+#' @param question_count integer. Number of questions the user wants the quiz to contain. When the argument is not specified, the question_count argument is set to 15 by default.
 #' 
 #' @examples
 #' # Run Math Quest quiz with 15 questions
@@ -28,11 +35,10 @@ source("R/ui.R")
 #' 
 #' 
 #' @export
-runMathQuest <- function(name, question_count) {
+runMathQuest <- function(name = "Superhero", question_count = 10) {
   shiny::shinyApp(ui = ui, 
                   server = create_server(question_count, name))
 }
 
 # Run app
 runMathQuest(name = "Bruny", question_count = 6)
-

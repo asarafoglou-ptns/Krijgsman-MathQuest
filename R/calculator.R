@@ -52,6 +52,8 @@ calculator <- function(input, output) {
   
   # Close calculator modal
   shiny::observeEvent(input$close_calculator, {
+    # Remove the result output
+    output$calc_result <- NULL
     shiny::removeModal()
   })
 }

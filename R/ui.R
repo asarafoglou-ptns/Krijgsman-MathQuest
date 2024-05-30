@@ -9,7 +9,10 @@ ui <- shiny::fluidPage(
         "
         /* Add orange box around instructions */
         .instruction_box {
-          padding: 10px;
+          padding-top: 0px; 
+          padding-bottom: 0px; 
+          padding-left: 10px; 
+          padding-right: 10px; 
           background-color: #FFA07b;
           color: #000000;
           border-radius: 10px;
@@ -57,22 +60,23 @@ ui <- shiny::fluidPage(
         .numeric-input, .select-input, .text-output {
           margin-bottom: 15px;
         }
-        
         /* Change the background color behind the progress bar */
         .progress {
         background-color: #FF3333;
         }
-
         /* Change the color of the progress bar */
         .progress-bar {
           background-color: #9AF764;
         }
-        
         /* Change font size and position of question and answer */
         .question {
           font-size: 24px;
           font-weight: bold;
           margin-top: 20px;
+        }
+        /* Change font size of the feedback*/
+        .feedback {
+        font-size: 18px;
         }
         "
       )
@@ -107,12 +111,13 @@ ui <- shiny::fluidPage(
                     shiny::h3("Instructions"),
                     shiny::p("Welcome to Math Quest,", shiny::textOutput("name", inline = TRUE), "!"),
                     shiny::p("1. Please choose your", shiny::tags$b('grade'), "to start your adventure."),
-                    shiny::p("2. Solve the math problems you encounter to defeat the monster."),
-                    shiny::p("3. Each correct answer brings you closer to victory."),
+                    shiny::p("2. Solve the math problems you encounter to", shiny::tags$b('defeat'), "the monster."),
+                    shiny::p("3. Each", shiny::tags$b('correct'), "answer brings you closer to victory."),
                     shiny::p("4. Enter your answer and hit", shiny::tags$b('Submit'), "."),
-                    shiny::p("5. Click on the", shiny::tags$b('Calculator'), "to open it if needed."),
-                    shiny::p("6. Progress your quest by clicking", shiny::tags$b('Next Question'),"."),
-                    shiny::p("7. Check your results by clicking", shiny::tags$b('Plot'),"."),
+                    shiny::p("5. Be careful! If you make 5 mistakes, it's", shiny::tags$b('game over'), "."),
+                    shiny::p("6. Click on the", shiny::tags$b('Calculator'), "to open it if needed."),
+                    shiny::p("7. Progress your quest by clicking", shiny::tags$b('Next Question'),"."),
+                    shiny::p("8. Check your results by clicking", shiny::tags$b('Show Results'),"."),
                     shiny::p("Are you ready to conquer the Math Quest? Good luck!"),
                     shiny::br()
                   )
@@ -127,15 +132,15 @@ ui <- shiny::fluidPage(
                       shiny::actionButton("submit", "Submit"),
                       shiny::div(class = "row_spacing")
                     ),
-                    shiny::textOutput("feedback"),
+                    shiny::div(class = "feedback", shiny::textOutput("feedback")),
                     shiny::div(class = "row_spacing"),
-                    conditionalPanel(
+                    shiny::conditionalPanel(
                       condition = "output.finished == 'FALSE'",
-                      actionButton("next_question", "Next Question", disabled = TRUE)
+                      shiny::actionButton("next_question", "Next Question", disabled = TRUE)
                     ),
-                    conditionalPanel(
+                    shiny::conditionalPanel(
                       condition = "output.finished == 'TRUE'",
-                      actionButton("plot_result", "Plot")
+                      shiny::actionButton("plot_result", "Show Results")
                     ),
                     shiny::br()
                   )
@@ -148,7 +153,7 @@ ui <- shiny::fluidPage(
   
   shiny::fluidRow(
     shiny::div(class = "row_spacing"),
-    shiny::column(width = 6,
+    shiny::column(width = 4,
                   shiny::div(class = "grade_box",
                              shiny::selectInput("grade", "Select your grade:",
                                                 choices = c("Second grade",
@@ -167,15 +172,15 @@ ui <- shiny::fluidPage(
   
   shiny::fluidRow(
     shiny::div(class = "row_spacing"),
-    shiny::column(width = 6,
+    shiny::column(width = 4,
                   shiny::actionButton("calculator_button", "Calculator")
-    )
-  ),
-  
-  # Row with columns for plots
-  shiny::fluidRow(
-    shiny::column(width = 6, plotOutput("score_plot")),
-    shiny::column(width = 6, plotOutput("operator_plot"))
+    ),
+    
+    # Column for the plot
+    shiny::column(width = 4,
+                  shiny::plotOutput("combined_plot"),
+                  shiny::br())
+    
   )
 )
   
