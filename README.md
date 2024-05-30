@@ -17,7 +17,7 @@ devtools::install_github("asarafoglou-ptns/Krijgsman-MathQuest")
 The mathQuest app can be started by running the function runMathQuest() along with the provided ‘name’ and ‘question_count’ arguments. If the user does not specify the arguments within the function, the app will be running using the default arguments of “Superhero” as name and 15 as question_count.
 ```r
 library(MathQuest)
-mathQuest::runMathQuest(name = “Bruny”, question_count = 15)
+MathQuest::runMathQuest(name = “Bruny”, question_count = 15)
 ```
 
 #### How to consult the documentation
