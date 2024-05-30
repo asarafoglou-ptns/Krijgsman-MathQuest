@@ -1,7 +1,7 @@
 # Krijgsman-MathQuest
 
 ## DESCRIPTION
-Math Quest is a fun and playful quiz app that allows elementary school children (fourth grade through eighth grade) to practice different parts of math, such as addition, subtraction, multiplication, and division. The app randomly generates math questions adapted to the selected school grade level. The application incorporates gamification and learning strategies to promote and make learning more fun for students and optimize their enjoyment to achieve the best results. For example, students are encouraged to answer all the questions correctly to ‘defeat’ the monster and all incorrectly answered questions will be repeated until correct. The app can be personalized by selecting the grade (math level), setting a name, and choosing the number of questions that they want to practice. 
+Math Quest is a fun and playful quiz app that allows elementary school children (second grade through sixth grade) to practice different parts of math, such as addition, subtraction, multiplication, and division. The app randomly generates math questions adapted to the selected school grade level. The application incorporates gamification and learning strategies to promote and make learning more fun for students and optimize their enjoyment to achieve the best results. For example, students are encouraged to answer all the questions correctly to ‘defeat’ the monster and all incorrectly answered questions will be repeated until correct. The app can be personalized by selecting the grade (math level), setting a name, and choosing the number of questions that they want to practice. 
 
 ## HOW TO USE THE APP & EXAMPLE APPLICATION
 
