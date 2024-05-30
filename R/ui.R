@@ -1,6 +1,3 @@
-# Adding resource path for images
-shiny::addResourcePath("static", "R/www")
-
 # Define UI for application
 ui <- shiny::fluidPage(
   shiny::tags$head(
@@ -90,9 +87,9 @@ ui <- shiny::fluidPage(
   shiny::titlePanel(
     shiny::div(
       shiny::fluidRow(
-        shiny::column(2, shiny::img(src = "/static/header1.png", height = 120, width = 160)),
+        shiny::column(2, shiny::img(src = "www/header1.png", height = 120, width = 160)),
         shiny::column(8, shiny::h1(shiny::tags$b("Math Quest"), align = "center")),
-        shiny::column(2, shiny::img(src = "/static/header2.png", height = 120, width = 160))
+        shiny::column(2, shiny::img(src = "www/header2.png", height = 120, width = 160))
       )
     )
   ),
@@ -101,7 +98,7 @@ ui <- shiny::fluidPage(
   shiny::absolutePanel(
     bottom = "10px",
     right = "20px",
-    shiny::img(id = "monster_image", src = "/static/monster.png", height = 500, width = 350)
+    shiny::img(id = "monster_image", src = "www/monster.png", height = 500, width = 350)
   ),
   
   shiny::fluidRow(
@@ -180,7 +177,6 @@ ui <- shiny::fluidPage(
     shiny::column(width = 4,
                   shiny::plotOutput("combined_plot"),
                   shiny::br())
-    
   )
 )
   

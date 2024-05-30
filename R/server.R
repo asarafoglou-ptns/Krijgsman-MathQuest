@@ -180,9 +180,9 @@ create_server <- function(question_count, name) {
       shinyWidgets::updateProgressBar(session, "progress", value = progress_value)
       
       if (progress_value == 0) {
-        shinyjs::runjs('$("#monster_image").attr("src", "/static/slain_monster.png");')
+        shinyjs::runjs('$("#monster_image").attr("src", "www/slain_monster.png");')
     } else {
-      shinyjs::runjs('$("#monster_image").attr("src", "/static/monster.png");')
+      shinyjs::runjs('$("#monster_image").attr("src", "www/monster.png");')
     }
   })
   
@@ -217,24 +217,24 @@ create_server <- function(question_count, name) {
       
       # Plot overall score and score by operator
       output$combined_plot <- shiny::renderPlot({
-        ggplot2::ggplot(plot_data, aes(x = category, y = score, fill = category)) +
+        ggplot2::ggplot(plot_data, ggplot2::aes(x = category, y = score, fill = category)) +
           ggplot2::geom_bar(stat = "identity", position = "dodge") +
           ggplot2::labs(title = "Overall and Operator Scores", y = "% Correct") +
           ggplot2::theme_minimal() +
           ggplot2::scale_fill_manual(values = c("Overall" = "#005AFD", "+" = "#FF1093", "-" = "#50C878", "*" = "#5C01BC", "/" = "#FFCF02")) +
-          ggplot2::geom_text(aes(label = round(score, 1)), vjust = -0.5, size = 5) +
+          ggplot2::geom_text(ggplot2::aes(label = round(score, 1)), vjust = -0.5, size = 5) +
           ggplot2::theme(
-            panel.background = element_rect(fill = "#FFA07b", color = NA),          # Plot background
-            plot.background = element_rect(fill = "#FFA07b", color = NA),           # Outer plot background
-            legend.background = element_rect(fill = "#FFA07b"),                     # Legend background
-            legend.box.background = element_rect(fill = "#FFA07b"),                 # Legend box background
-            panel.grid.major = element_blank(),                                     # Remove major grid lines
-            panel.grid.minor = element_blank(),                                     # Remove minor grid lines
-            axis.line = element_line(color = "black"),                              # Axis lines
-            axis.text = element_text(size = 16, color = "black"),                   # Font size for axis text
-            axis.title.x = element_text(size = 14, color = "black", face = "bold"), # Font size for x-axis title
-            axis.title.y = element_text(size = 14, color = "black", face = "bold"), # Font size for y-axis title
-            plot.title = element_text(size = 20, face = "bold", hjust = 0.5)        # Title size, bold, and centered
+            panel.background = ggplot2::element_rect(fill = "#FFA07b", color = NA),          # Plot background
+            plot.background = ggplot2::element_rect(fill = "#FFA07b", color = NA),           # Outer plot background
+            legend.background = ggplot2::element_rect(fill = "#FFA07b"),                     # Legend background
+            legend.box.background = ggplot2::element_rect(fill = "#FFA07b"),                 # Legend box background
+            panel.grid.major = ggplot2::element_blank(),                                     # Remove major grid lines
+            panel.grid.minor = ggplot2::element_blank(),                                     # Remove minor grid lines
+            axis.line = ggplot2::element_line(color = "black"),                              # Axis lines
+            axis.text = ggplot2::element_text(size = 16, color = "black"),                   # Font size for axis text
+            axis.title.x = ggplot2::element_text(size = 14, color = "black", face = "bold"), # Font size for x-axis title
+            axis.title.y = ggplot2::element_text(size = 14, color = "black", face = "bold"), # Font size for y-axis title
+            plot.title = ggplot2::element_text(size = 20, face = "bold", hjust = 0.5)        # Title size, bold, and centered
             )
       }, bg = "transparent")
   })

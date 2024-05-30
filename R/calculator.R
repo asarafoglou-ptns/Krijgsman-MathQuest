@@ -21,7 +21,7 @@ calculator <- function(input, output) {
             
             # Add image
             shiny::column(6,
-              shiny::img(src = "/static/calculator.png", height = "200px", width = "160px"))
+              shiny::img(src = "www/calculator.png", height = "200px", width = "160px"))
             ),
         
         # Action buttons in the footer
