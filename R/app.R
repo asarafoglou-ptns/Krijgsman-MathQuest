@@ -36,6 +36,8 @@ source("R/ui.R")
 #' 
 #' @export
 runMathQuest <- function(name = "Superhero", question_count = 10) {
+  shinyjs::useShinyjs()
+  shiny::addResourcePath('www', system.file("www", package = "MathQuest"))
   shiny::shinyApp(ui = ui, 
                   server = create_server(question_count, name))
 }
