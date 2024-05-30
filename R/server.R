@@ -9,6 +9,9 @@ create_server <- function(question_count, name) {
   # Define server logic
   server <- function(input, output, session) {
     
+    # Refresh page if shinywidgets fails to load
+    shinyjs::runjs("typeof window.updateLabel === 'undefined' && location.reload()")
+    
     # User name available for UI
     output$name <- shiny::renderText(name)
     
