@@ -42,5 +42,3 @@ runMathQuest <- function(name = "Superhero", question_count = 10) {
                   server = create_server(question_count, name))
 }
 
-# Run app
-runMathQuest(name = "Bruny", question_count = 6)
